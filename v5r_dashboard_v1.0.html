@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V5 Medical · 合规风险看板</title>
+<style>
+:root{
+  --bg:#0e1420; --card:#182234; --card2:#1e2a44; --line:#2a3a5c;
+  --text:#e8eefc; --muted:#93a3c4; --red:#ff5d6c; --amber:#ffb84d;
+  --green:#3ddc84; --blue:#5aa9ff; --violet:#b78bff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:20px;max-width:1200px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:6px}
+h1{font-size:22px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.version{display:inline-block;background:#1a3420;color:var(--green);border:1px solid var(--green);border-radius:6px;padding:2px 10px;font-size:12px;margin-left:10px;vertical-align:middle}
+.badge{font-size:12px;padding:2px 10px;border-radius:20px}
+.b-high{background:rgba(255,93,108,.15);color:var(--red);border:1px solid var(--red)}
+.b-mid{background:rgba(255,184,77,.15);color:var(--amber);border:1px solid var(--amber)}
+.b-low{background:rgba(61,220,132,.15);color:var(--green);border:1px solid var(--green)}
+.b-info{background:rgba(90,169,255,.15);color:var(--blue);border:1px solid var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.card h2{font-size:16px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card h2::before{content:"";width:4px;height:16px;background:var(--blue);border-radius:2px}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:12px}
+.node{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.n{padding:6px 10px;border-radius:8px;font-size:12px;background:var(--card2);border:1px solid var(--line)}
+.n.hot{border-color:var(--red);color:var(--red);background:rgba(255,93,108,.08)}
+.note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.7}
+.subsection{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.subsection-title{font-size:14px;color:var(--text);margin-bottom:8px}
+footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
+.ok{color:var(--green)} .warn{color:var(--amber)} .bad{color:var(--red)}
+.update{font-size:12px;color:var(--amber);margin-top:8px;padding:8px;background:rgba(255,184,77,.1);border-radius:6px;border-left:3px solid var(--amber)}
+</style>
+</head>
+<body>
+<header>
+  <h1>🛡️ V5 Medical 合规风险看板<span class="version">v1.0 · Clara审定通过 2026-10-20</span></h1>
+  <div style="color:var(--muted);font-size:13px">更新：2026-10-20 09:15 · RC 风控</div>
+</header>
+<div class="sub">依据：三红线唯一口径（CEO-ORD-20260904-015 + CEO 10-18重启令第七节）· P-06 风险管理 · 10节点订单状态机 · 数据来源：ERP / RC裁定记录</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>三红线 <span class="badge b-high">硬约束</span></h2>
+    <div class="kv"><span class="k">预付款比例</span><span><b class="bad">≥ 30%</b>（不足一票否决）</span></div>
+    
+    <div class="subsection">
+      <div class="subsection-title">毛利率四档制（新客≥40%底线）</div>
+      <div class="kv"><span class="k">新客首次报价 ≥40%</span><span class="ok">🟢 自动通过</span></div>
+      <div class="kv"><span class="k">新客首次报价 &lt;40%</span><span class="bad">🔴 一票拦截（需CEO书面特批）</span></div>
+      <div class="kv"><span class="k">旧客/特殊情况 30-40%</span><span class="ok">🟢 通过</span></div>
+      <div class="kv"><span class="k">旧客/特殊情况 20-30%</span><span class="warn">🟡 CMD+SA双签</span></div>
+      <div class="kv"><span class="k">旧客/特殊情况 &lt;20%</span><span class="bad">🔴 CEO特批+RC留痕</span></div>
+    </div>
+    
+    <div class="kv"><span class="k">尾款账期</span><span><b class="bad">≤ 30 天</b></span></div>
+    
+    <div class="update">
+      <strong>📌 2026-10-18 CEO重启令更新</strong>：新客报价毛利底线提升至≥40%，不再适用"30-40%自动通过"档。详见RC-RULING-20261019-004。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>风险矩阵 <span class="badge b-info">P-06</span></h2>
+    <table>
+      <tr><th>风险项</th><th>可能性</th><th>严重性</th><th>等级</th><th>状态</th></tr>
+      <tr><td>预付款不足 30%</td><td>中</td><td>高</td><td><span class="badge b-high">高</span></td><td>监控中</span></td></tr>
+      <tr><td><strong>新客报价 &lt;40%</strong></td><td>中</td><td>高</td><td><span class="badge b-high">高</span></td><td>新口径执行中</td></tr>
+      <tr><td>多肽页面GMP宣称违规</td><td>高</td><td>高</td><td><span class="badge b-high">高</span></td><td class="warn">部分整改中</td></tr>
+      <tr><td>尾款账期 &gt;30 天</td><td>中</td><td>中</td><td><span class="badge b-mid">中</span></td><td>监控中</td></tr>
+      <tr><td>N2 客户背调缺失</td><td>中</td><td>中</td><td><span class="badge b-mid">中</span></td><td>待审查</td></tr>
+      <tr><td>制裁名单未筛查</td><td>低</td><td>高</td><td><span class="badge b-mid">中</span></td><td>待确认</td></tr>
+      <tr><td>毛利率 &lt;20% 无特批</td><td>低</td><td>高</td><td><span class="badge b-high">高</span></td><td>监控中</td></tr>
+    </table>
+    <div class="note">数据来源：RC风控裁定记录 + ERP订单数据。实时更新。</div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+  <h2>订单节点风控 <span class="badge b-info">10节点状态机</span></h2>
+  <div class="node">
+    <span class="n">N1 线索</span><span class="n">N2 背调</span><span class="n">N3 报价</span>
+    <span class="n hot">N4 合同·RC审查</span><span class="n hot">N5 预付款·风控</span>
+    <span class="n">N6 生产</span><span class="n">N7 质检</span><span class="n">N8 发货</span>
+    <span class="n">N9 尾款</span><span class="n">N10 结案</span>
+  </div>
+  <div class="note">RC 关键控制点：<b class="bad">N4 合同审查</b>（三红线合规性）· <b class="bad">N5 预付款</b>（≥30% 到账确认）。ERP 为唯一账本，节点状态以 ERP 单据为准。</div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>制度版本跟踪</h2>
+    <div class="kv"><span class="k">管理手册 V5-MM-2026-01</span><span class="ok">v1.1 现行</span></div>
+    <div class="kv"><span class="k">组织架构与职责矩阵</span><span class="ok">v1.4 现行</span></div>
+    <div class="kv"><span class="k">P-06 风险管理</span><span class="warn">v1.0 · 口径待修订</span></div>
+    <div class="kv"><span class="k">RC Daily SOP</span><span class="ok">v2.7.0 现行</span></div>
+    <div class="kv"><span class="k">十束光文化</span><span class="warn">v1.1 · 未含EO/MO</span></div>
+    <div class="kv"><span class="k">V5工作流SOP</span><span class="ok">v2.0 现行</span></div>
+  </div>
+  <div class="card">
+    <h2>观察项 / 待决策</h2>
+    <div class="kv"><span class="k"><span class="dot" style="background:var(--red)"></span>多肽页面GMP宣称</span><span class="warn">部分整改中·截止21:00</span></div>
+    <div class="kv"><span class="k"><span class="dot" style="background:var(--amber)"></span>制裁名单辅助检索</span><span class="warn">待Clara确认</span></div>
+    <div class="kv"><span class="k"><span class="dot" style="background:var(--amber)"></span>三会口径澄清</span><span class="warn">待确认</span></div>
+    <div class="kv"><span class="k"><span class="dot" style="background:var(--green)"></span>ISO 体系文件夹</span><span class="ok">已落成</span></div>
+    <div class="kv"><span class="k"><span class="dot" style="background:var(--green)"></span>Europa-Peptide报价</span><span class="ok">✅ 风控初审通过</span></div>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+  <h2>当前P0阻断项</h2>
+  <table>
+    <tr><th>项目</th><th>风险等级</th><th>截止时间</th><th>状态</th><th>负责人</th></tr>
+    <tr><td>多肽页面GMP宣称整改</td><td><span class="badge b-high">高</span></td><td>2026-10-20 21:00</td><td class="warn">部分整改中</td><td>GO/DO</td></tr>
+  </table>
+</div>
+
+<footer>
+  <div>🛡️ V5 Medical 合规风险看板 v1.0 · 级列1风控权威</div>
+  <div>RC风控官：Clara Morgan · 一票否决权</div>
+</footer>
+
+<script>
+document.getElementById('today').textContent = new Date().toLocaleDateString('zh-CN');
+</script>
+</body>
+</html>
