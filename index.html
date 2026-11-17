@@ -45,8 +45,8 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);color:v
 </head>
 <body>
 <header>
-  <h1>🛡️ V5 Medical 合规风险看板<span class="version">v1.0 · Clara审定通过 2026-10-20</span></h1>
-  <div style="color:var(--muted);font-size:13px">更新：2026-10-20 09:15 · RC 风控</div>
+  <h1>🛡️ V5 Medical 合规风险看板<span class="version">v1.1 · Clara审定通过 2026-11-17</span></h1>
+  <div style="color:var(--muted);font-size:13px">更新：2026-11-17 08:45 · RC 风控</div>
 </header>
 <div class="sub">依据：三红线唯一口径（CEO-ORD-20260904-015 + CEO 10-18重启令第七节）· P-06 风险管理 · 10节点订单状态机 · 数据来源：ERP / RC裁定记录</div>
 
@@ -119,11 +119,12 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);color:v
 </div>
 
 <div class="card" style="margin-bottom:20px">
-  <h2>当前P0阻断项</h2>
+  <h2>当前P0阻断项 <span class="badge b-info">实时</span></h2>
   <table>
     <tr><th>项目</th><th>风险等级</th><th>截止时间</th><th>状态</th><th>负责人</th></tr>
-    <tr><td>多肽页面GMP宣称整改</td><td><span class="badge b-high">高</span></td><td>2026-10-20 21:00</td><td class="warn">部分整改中</td><td>GO/DO</td></tr>
+    <tr><td colspan="5" style="text-align:center;color:var(--muted)">数据同步中... <a href="#" style="color:var(--blue)">刷新</a></td></tr>
   </table>
+  <div class="note">数据来源：ERP实时订单 + RC风控裁定记录。每4小时自动更新。</div>
 </div>
 
 <footer>
